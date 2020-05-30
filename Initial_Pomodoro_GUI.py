@@ -32,25 +32,38 @@ class SampleApp(tk.Tk):
         self._frame.pack()
 
 class StartPage(tk.Frame):
-    def __init__(self, master):
-        tk.Frame.__init__(self, master, bg='khaki')
-        tk.Label(self, text="Start page", font=('MathJax_SansSerif-Bold', 18, "bold")).pack(side="top", fill="x", pady=5)
-        tk.Button(self, text="README", font=('MathJax_SansSerif-Bold', 18, "bold"),
-                  command=lambda: master.switch_frame(READMEPage)).pack(fill='x', pady = 10)
-        tk.Button(self, text="START POMODORO", font=('MathJax_SansSerif-Bold', 18, "bold"),
-                  command=lambda: master.switch_frame(PomodoroPage)).pack(fill='x', pady = 10)
+	def __init__(self, master):
+		tk.Frame.__init__(self, master, bg='khaki')
+		tk.Label(self, text="Start page", font=('MathJax_SansSerif-Bold', 18, "bold")).pack(side="top", fill="x", pady=5)
+		tk.Button(self, text="README", font=('MathJax_SansSerif-Bold', 18, "bold"), command=lambda: master.switch_frame(READMEPage)).pack(fill='x', pady = 10)
+		tk.Button(self, text="START POMODORO", font=('MathJax_SansSerif-Bold', 18, "bold"), command=lambda: master.switch_frame(PomodoroPage)).pack(fill='x', pady = 10)
+		tk.Button(self, text="Quit", font=('MathJax_SansSerif-Bold', 18, "bold"), command=master.quit).pack(fill='x', pady = 10)
+				  
 
 class READMEPage(tk.Frame):
-    def __init__(self, master):
-        tk.Frame.__init__(self, master)
-        tk.Frame.configure(self,bg='brown')
-        tk.Label(self, text="README", font=('MathJax_SansSerif-Bold', 18, "bold")).pack(side="top", fill="x", pady=5)
-        
-        tk.Button(self, text="Go back", font=('MathJax_SansSerif-Bold', 14, "bold"),
-                  command=lambda: master.switch_frame(StartPage)).pack()
-        tk.Label(self, text="Here goes the description what this app does.", font=('MathJax_SansSerif-Bold', 18, "bold")).pack(side="top", fill="both")
-        tk.Button(self, text="Go back", font=('MathJax_SansSerif-Bold', 14, "bold"),
-                  command=lambda: master.switch_frame(StartPage)).pack()
+	def __init__(self, master):
+		tk.Frame.__init__(self, master)
+		tk.Frame.configure(self,bg='brown')
+		tk.Label(self, text="README", font=('MathJax_SansSerif-Bold', 18, "bold")).pack(side="top", fill="x", pady=5)
+
+		tk.Button(self, text="Go back", font=('MathJax_SansSerif-Bold', 14, "bold"),
+				  command=lambda: master.switch_frame(StartPage)).pack()
+		
+		self.textDescription = '''A personal Pomodoro app written from scratch in Python. 
+		An attempt to create personal Pomodoro with additional settings \nsuch as tracking my own progress, adjustable settings, 
+		easy to use application with a nice GUI interface.\n
+		The app (in its final developed stage) is intended to be easy to use and versatile.\n
+		--- What is a Pomodoro? ---
+
+		The Pomodoro Technique is a time management method developed by Francesco Cirillo in the late 1980s. 
+		The technique uses a timer to break down work into intervals, traditionally 25 minutes in length, 
+		separated by short breaks (usually 5 minutes and 15-minute longer breaks). \n
+		Each interval is known as a pomodoro, from the Italian word for 'tomato', after the tomato-shaped kitchen timer 
+		that Cirillo used as a university student (source: Wikipedia).'''
+		
+		tk.Label(self, text=self.textDescription, font=('MathJax_SansSerif-Bold', 12, "bold")).pack(side="top", fill="both")
+		tk.Button(self, text="Go back", font=('MathJax_SansSerif-Bold', 14, "bold"), command=lambda: master.switch_frame(StartPage)).pack()
+
 
 class PomodoroPage(tk.Frame):
 	def __init__(self, master):
