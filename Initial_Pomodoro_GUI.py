@@ -98,17 +98,22 @@ class PomodoroPage(tk.Frame):
 
 		label_font = ('MathJax_SansSerif-Bold', 40)
 		self.time_str = tk.StringVar()
-		self.LabelTime = tk.Label(self, textvariable=self.time_str, font=label_font, bg='white', 
-				 fg='blue', relief='raised', bd=3)
+		self.LabelTime = tk.Label(self, textvariable = self.time_str, font = label_font, bg = 'white', 
+				 fg = 'blue', relief = 'raised', bd=3)
 
-		self.StartButton = tk.Button(self, text='Start Pomodoro', command=self.start_working, font=('MathJax_SansSerif-Bold', 14, "bold"))
+		self.StartButton = tk.Button(self, text = 'Start Pomodoro', command = self.start_working, font = ('MathJax_SansSerif-Bold', 14, "bold"))
 
-		self.PauseButton = tk.Button(self, text='Pause Pomodoro',  font=('MathJax_SansSerif-Bold', 14, "bold"))
+		self.PauseButton = tk.Button(self, text = 'Pause Pomodoro', command = self.hold_pause, font = ('MathJax_SansSerif-Bold', 14, "bold"))
 
-		self.goBackButton = tk.Button(self, text="Go back", font=('MathJax_SansSerif-Bold', 14, "bold"),
-				  command=lambda: master.switch_frame(StartPage))
+		self.goBackButton = tk.Button(self, text = "Go back", font = ('MathJax_SansSerif-Bold', 14, "bold"),
+				  command = lambda: master.switch_frame(StartPage))
 
 		self.show_widgets()
+		
+	def hold_pause(self):
+        
+		self.pause = True
+		self.isPauseClicked = True
 
 	def start_working(self):
 		# while working, setting pause flag to false
@@ -122,10 +127,13 @@ class PomodoroPage(tk.Frame):
 			# Setting the condition of running a Pomodoro continuously as long
 			# as the pasue is not pressed
 			while(self.pause == False):
-
+				
 				# for a moment, setting the time as long as test working time (10sec)
 				self.currentTiming = workingTime
 
+				# checking if puase button is pressed
+				self.isPauseClicked = False
+				
 				for self.t in range(self.currentTiming, -1, -1):
 					# format as 2 digit integers, fills with zero to the left
 					# divmod() gives minutes, seconds
@@ -137,7 +145,12 @@ class PomodoroPage(tk.Frame):
 					time.sleep(1)
 					
 					print(self.t)
-		
+					
+					# stopping the timer if pause button pressed
+					if self.pause == True:
+						self.isPauseClicked = True
+						break
+					
 		except Exception as e:
 			# in case of any error, print the error
 			print(e)
