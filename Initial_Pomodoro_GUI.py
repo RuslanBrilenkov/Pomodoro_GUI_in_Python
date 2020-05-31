@@ -128,8 +128,13 @@ class PomodoroPage(tk.Frame):
 			# as the pasue is not pressed
 			while(self.pause == False):
 				
-				# for a moment, setting the time as long as test working time (10sec)
-				self.currentTiming = workingTime
+				# Checking which time range to choose - to work, break or long break?
+				if (self.TimeForWork == True):
+					# for a moment, setting the time as long as test working time (10sec)
+					self.currentTiming = workingTime
+					# checking if we continue after the pause:
+					if (self.isPauseClicked == True):
+						self.currentTiming = self.currentTimeCount
 
 				# checking if puase button is pressed
 				self.isPauseClicked = False
@@ -146,6 +151,10 @@ class PomodoroPage(tk.Frame):
 					
 					print(self.t)
 					
+					# tracking the current time left to finish the streak
+					# need it to continue the work after the pause
+					self.currentTimeCount = self.t
+					
 					# stopping the timer if pause button pressed
 					if self.pause == True:
 						self.isPauseClicked = True
@@ -153,7 +162,7 @@ class PomodoroPage(tk.Frame):
 					
 		except Exception as e:
 			# in case of any error, print the error
-			print(e)
+			print(str(e))
 		
 	def show_widgets(self):
 		self.LabelTime.pack(fill='x', padx=5, pady=5)
