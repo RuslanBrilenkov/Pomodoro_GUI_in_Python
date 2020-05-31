@@ -118,20 +118,29 @@ class PomodoroPage(tk.Frame):
 
 	def count_down(self):
 		
-		# for a moment, setting the time as long as test working time (10sec)
-		self.currentTiming = workingTime
+		try:
+			# Setting the condition of running a Pomodoro continuously as long
+			# as the pasue is not pressed
+			while(self.pause == False):
+
+				# for a moment, setting the time as long as test working time (10sec)
+				self.currentTiming = workingTime
+
+				for self.t in range(self.currentTiming, -1, -1):
+					# format as 2 digit integers, fills with zero to the left
+					# divmod() gives minutes, seconds
+					self.sf = "{:02d}:{:02d}".format(*divmod(self.t, 60))
+					#print(sf)  # test
+					self.time_str.set(self.sf)
+					self.update()
+					# delay one second
+					time.sleep(1)
+					
+					print(self.t)
 		
-		for self.t in range(self.currentTiming, -1, -1):
-			# format as 2 digit integers, fills with zero to the left
-			# divmod() gives minutes, seconds
-			self.sf = "{:02d}:{:02d}".format(*divmod(self.t, 60))
-			#print(sf)  # test
-			self.time_str.set(self.sf)
-			self.update()
-			# delay one second
-			time.sleep(1)
-			
-			print(self.t)
+		except Exception as e:
+			# in case of any error, print the error
+			print(e)
 		
 	def show_widgets(self):
 		self.LabelTime.pack(fill='x', padx=5, pady=5)
