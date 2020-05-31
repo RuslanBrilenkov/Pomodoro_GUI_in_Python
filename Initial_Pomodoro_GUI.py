@@ -19,17 +19,18 @@ globallongBreakCount = 0
 
 
 class SampleApp(tk.Tk):
-    def __init__(self):
-        tk.Tk.__init__(self)
-        self._frame = None
-        self.switch_frame(StartPage)
+	def __init__(self):
+		tk.Tk.__init__(self)
+		self._frame = None
+		self.switch_frame(StartPage)
 
-    def switch_frame(self, frame_class):
-        new_frame = frame_class(self)
-        if self._frame is not None:
-            self._frame.destroy()
-        self._frame = new_frame
-        self._frame.pack()
+	def switch_frame(self, frame_class):
+		#self.isPauseClicked = True
+		new_frame = frame_class(self)
+		if self._frame is not None:
+			self._frame.destroy()
+		self._frame = new_frame
+		self._frame.pack()
 
 class StartPage(tk.Frame):
 	def __init__(self, master):
@@ -86,7 +87,7 @@ class PomodoroPage(tk.Frame):
 		self.shortBreakCount = globalshortBreakCount
 		self.longBreakCount = globallongBreakCount
 
-		# counter to track how many pomodoros you accomplished
+		# counter to track the current time
 		self.currentTimeCount = 0
 
 		self.Message = "Time to Work"
@@ -135,6 +136,13 @@ class PomodoroPage(tk.Frame):
 					# checking if we continue after the pause:
 					if (self.isPauseClicked == True):
 						self.currentTiming = self.currentTimeCount
+						
+				elif (self.TimeForShortBreak == True):
+					# checking if we continue after the pause:
+					self.currentTiming = shortBreakTime
+					if (self.isPauseClicked == True):
+						self.currentTiming = self.currentTimeCount
+				
 
 				# checking if puase button is pressed
 				self.isPauseClicked = False
@@ -159,7 +167,25 @@ class PomodoroPage(tk.Frame):
 					if self.pause == True:
 						self.isPauseClicked = True
 						break
-					
+						
+					# changing the regime between work/break/long break
+					# when counter reached zero
+					if (self.t == 0):
+						if (self.TimeForWork == True):
+							self.TimeForWork = False
+							print("Time for a break!")
+							self.Message = 'Time for a break!'
+							# activating the short break counter instead
+							self.TimeForShortBreak = True
+
+						elif (self.TimeForShortBreak == True):
+							self.TimeForShortBreak = False
+							print("Time to Work!")
+							self.Message = 'Time to Work!'
+							# activating the work counter instead
+							self.TimeForWork = True
+
+
 		except Exception as e:
 			# in case of any error, print the error
 			print(str(e))
