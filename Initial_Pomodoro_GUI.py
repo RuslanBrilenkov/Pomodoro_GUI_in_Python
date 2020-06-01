@@ -136,17 +136,21 @@ class PomodoroPage(tk.Frame):
 					# checking if we continue after the pause:
 					if (self.isPauseClicked == True):
 						self.currentTiming = self.currentTimeCount
-						
 				elif (self.TimeForShortBreak == True):
 					# checking if we continue after the pause:
 					self.currentTiming = shortBreakTime
 					if (self.isPauseClicked == True):
 						self.currentTiming = self.currentTimeCount
-				
+				elif (self.TimeForLongBreak == True):
+					self.currentTiming = longBreakTime
+					# checking if we continue after the pause:
+					if (self.isPauseClicked == True):
+						self.currentTiming = self.currentTimeCount
 
 				# checking if puase button is pressed
 				self.isPauseClicked = False
 				
+				# The count-down timer. The "meat" of the program.
 				for self.t in range(self.currentTiming, -1, -1):
 					# format as 2 digit integers, fills with zero to the left
 					# divmod() gives minutes, seconds
@@ -172,19 +176,37 @@ class PomodoroPage(tk.Frame):
 					# when counter reached zero
 					if (self.t == 0):
 						if (self.TimeForWork == True):
+							self.workCount += 1
 							self.TimeForWork = False
+							print('\007') # a bell signal
 							print("Time for a break!")
 							self.Message = 'Time for a break!'
-							# activating the short break counter instead
-							self.TimeForShortBreak = True
+							
+							# activating either a short or long break
+							if (self.shortBreakCount % 2 == 0)and(self.shortBreakCount !=0):
+								self.TimeForLongBreak = True
+								self.TimeForShortBreak = False
+							else:
+								self.TimeForShortBreak = True
+								self.TimeForLongBreak = False
 
 						elif (self.TimeForShortBreak == True):
+							self.shortBreakCount += 1
 							self.TimeForShortBreak = False
 							print("Time to Work!")
 							self.Message = 'Time to Work!'
 							# activating the work counter instead
 							self.TimeForWork = True
 
+						elif (self.TimeForLongBreak == True):
+							self.longBreakCount += 1
+							self.TimeForLongBreak = False
+							print('\007') 
+							print('Time to Work!')
+							self.Message = 'Time to Work!'
+							self.TimeForWork = True
+							
+						print("Counter:\nWork = {work}, Short break = {shbreak}, long break = {lbreak}".format(work = self.workCount, shbreak = self.shortBreakCount, lbreak = self.longBreakCount))
 
 		except Exception as e:
 			# in case of any error, print the error
