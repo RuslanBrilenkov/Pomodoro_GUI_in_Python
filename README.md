@@ -28,3 +28,8 @@ The code contains a button, which calls the response message, nothing less, noth
 
 You can run the program from terminal such as:
 >> python Initial_Pomodoro_GUI.py
+
+
+If you have any comments, questions, suggestions, or just want to connect, my LinkedIn is http://bit.ly/RBrilenkov
+
+This project is described in a few of my articles that can be found here: https://ruslan-brilenkov.medium.com/
