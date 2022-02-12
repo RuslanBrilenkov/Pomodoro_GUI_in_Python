@@ -1,3 +1,4 @@
+# Try-catch block for importing the most relevant tkinter version
 try:
     import tkinter as tk # for Python 3
 except:
@@ -7,9 +8,10 @@ import time
 
 # Initializing some global variables
 # Initial time range for work time (standard 25 min)
+# Note: time units are seconds, to make minutes multiply by 60. 
 workingTime = 10#25 * 60
 # Short break time (5 min)
-shortBreakTime = 5#5 * 60
+shortBreakTime = 5#5 * 60 
 # Long break time (15 min)
 longBreakTime = 15#15 * 60
 
@@ -220,7 +222,7 @@ class PomodoroPage(tk.Frame):
 		self.PauseButton.pack(fill='x', pady = 10)
 		self.goBackButton.pack(fill='x', pady = 10)
 
-        
+# Running the App as the main module
 if (__name__ == "__main__"):
     app = SampleApp()
     app.mainloop()
